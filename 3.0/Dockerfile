@@ -38,13 +38,15 @@ RUN buildDeps='gcc libc6-dev make' \
 	&& make -C /usr/src/redis \
 	&& make -C /usr/src/redis install \
 	&& rm -r /usr/src/redis \
-	&& apt-get purge -y --auto-remove $buildDeps
+	&& apt-get purge -y --auto-remove $buildDeps \
+	&& echo 'net.core.somaxconn = 65535' >> /etc/sysctl.conf
 
 RUN mkdir /data && chown redis:redis /data
 VOLUME /data
 WORKDIR /data
 
 COPY docker-entrypoint.sh /entrypoint.sh
+COPY redis.conf /
 ENTRYPOINT ["/entrypoint.sh"]
 
 EXPOSE 6379
