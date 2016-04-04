@@ -1,6 +1,8 @@
 #!/bin/bash
 set -e
 
+sysctl -w net.core.somaxconn=65535
+
 # allow the container to be started with `--user`
 if [ "$1" = 'redis-server' -a "$(id -u)" = '0' ]; then
 	chown -R redis .
