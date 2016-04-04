@@ -50,4 +50,4 @@ COPY redis.conf /
 ENTRYPOINT ["/entrypoint.sh"]
 
 EXPOSE 6379
-CMD [ "redis-server" ]
+CMD ["redis-server", "/redis.conf"]
